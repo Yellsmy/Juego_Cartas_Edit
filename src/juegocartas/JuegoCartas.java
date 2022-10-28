@@ -80,7 +80,7 @@ public class JuegoCartas
                         jugar.jugadores(cantidadJugadores);
                         for (int i=0; i < cantidadJugadores; i++)
                         {
-                            jugar.registrar(i+1,tipoMazo);  //registramos los jugadores y asignamos la primera carta y puntos de forma aleatoria
+                            jugar.registrar(i+1);  //registramos los jugadores y asignamos la primera carta y puntos de forma aleatoria
                         }
                         
                         jugar.turnoJugadores(tipoMazo);// inician los turnos segun el registro de jugadores
