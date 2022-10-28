@@ -27,10 +27,10 @@ public class Juego  extends Baraja
     
     // Registra un jugador y los ingresa en la lista de registro
     // @param idJugador: Recibe el id del jugador para registrarlo en la lista
-    public void registrar(int idJugador,int tipoMazo)
+    public void registrar(int idJugador)
     { 
         Carta carta = repartirCarta();// primera carta a asignar
-        double puntosCarta= valorCartaRepartida(carta.getIdentificadorCarta(),tipoMazo); //obtenemos el valor de la carta asignada
+        double puntosCarta= valorCartaRepartida(carta.getIdentificadorCarta()); //obtenemos el valor de la carta asignada
         Jugador jugadorX = new Jugador(idJugador,puntosCarta ); // generamos un nuevo jugador y sus puntos 
         listaJugadores.addJugadoresRegistro(jugadorX); // agregamor el jugador 
         //generamos informacion asignada 
@@ -48,7 +48,7 @@ public class Juego  extends Baraja
      * @method contains: devuelve verdadero si @cartaRepartida contiene el valor evaluado en el IF
      * si la evaluacion IF anidado es verdaera retorna el valor asignado a la carta
      */
-    public double valorCartaRepartida(String idenCartaRepartida,int tipoMazo)
+    public double valorCartaRepartida(String idenCartaRepartida)
     {
         if(idenCartaRepartida == "As")
         {
@@ -78,15 +78,15 @@ public class Juego  extends Baraja
 
         for (int i = 0; i < 1; i++)//realizaa la asignacion de carta una vez por jugador
         {
-            if(i >= mazoBarajeado.size())// validamos que el valor tamaño del mazo sea almenos de 1 carta para poder asignarla 
+            if(i >= mazoBarajeadoD.size())// validamos que el valor tamaño del mazo sea almenos de 1 carta para poder asignarla 
             {
                 //capturar error de cartas insuficientes
                 try
                 {
-
-                    cartaRepartida=mazoBarajeado.get(mazoBarajeado.size()-1); //obtenemos una carta del mazo
+                    
+                    cartaRepartida=mazoBarajeadoD.stream().findFirst().get(); //obtenemos una carta del mazo
                     System.out.println("\033[36mBANCA REPARTE LA CARTA "+cartaRepartida); // la Banca muestra la carta a los jugadores 
-                    mazoBarajeado.remove(mazoBarajeado.size()-1);//Eliminamos la carta para que no pueda ser asignada nuevamente 
+                    mazoBarajeadoD.remove(cartaRepartida);//Eliminamos la carta para que no pueda ser asignada nuevamente 
                 }
                 catch(ArrayIndexOutOfBoundsException error)
                 {
@@ -96,9 +96,9 @@ public class Juego  extends Baraja
             }
             else
             {
-                cartaRepartida=mazoBarajeado.get(i);  //obtenemos una carta del mazo
+                cartaRepartida=mazoBarajeadoD.stream().findFirst().get();  //obtenemos una carta del mazo
                 System.out.println("\033[36mBANCA REPARTE LA CARTA "+cartaRepartida); // la Banca muestra la carta a los jugadores 
-                mazoBarajeado.remove(i); //Eliminamos la carta para que no pueda ser asignada nuevamente 
+                mazoBarajeadoD.remove(cartaRepartida); //Eliminamos la carta para que no pueda ser asignada nuevamente 
             }
         }
         //retornamos el nombre de carta y su valor en la variable @cartaRepartida
@@ -204,7 +204,7 @@ public class Juego  extends Baraja
                 if(pedirCarta==1)// validacion si la opcion es 1 
                 {
                     cartaRepartida=repartirCarta(); //asignacion de carta aleatoria
-                    valorCarta=valorCartaRepartida(cartaRepartida.getIdentificadorCarta(),tipoMazo); //obtenemos el valor de la carta asignada
+                    valorCarta=valorCartaRepartida(cartaRepartida.getIdentificadorCarta()); //obtenemos el valor de la carta asignada
                     double puntos = agregarCartaJugador((i+1),valorCarta);// Realizamos acumulacion de puntos segun carta asginada, puntos de jugador y id de jugador
 
                     System.out.println("\033[33mJugador "+indiceJugador[i]+" \033[35mcarta repartida \033[33m"+cartaRepartida+" \033[35mpuntos de Carta \033[33m"+valorCarta);
