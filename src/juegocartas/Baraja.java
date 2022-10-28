@@ -6,19 +6,18 @@ package juegocartas;
 * Metodos para controlar la creacion de cartas, la creacion de baraja, 
 * orden de la baraja, creacion de jugadores, repartir cartas
 ***********************************************/
-import java.util.ArrayList;
+
 import java.util.HashSet;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Baraja 
 {
     //Creamos el arreglo para la baraja ordenada
     HashSet <Carta> mazoD = new HashSet <Carta>();
     
-    private List<Carta> mazo = new ArrayList<Carta>();
-
     //Creamos el arreglo para la baraja desordenada
-    List<Carta> mazoBarajeado = new ArrayList<Carta>();
+    Set<Carta> mazoBarajeadoD = new LinkedHashSet<Carta>();
 
     //**************************************************************
     
@@ -147,7 +146,53 @@ public class Baraja
     
     
     //**************************************************************
-    //Metodo para controlar cartas repetidas para crear el MAZO BARAJEADO
+    
+    // Generador de indices aleatorios para Barajear el mazo segun el tipo de mazo 
+    public int random(int tipoMazo)
+    {
+        int randomIndex = 0;
+        if(tipoMazo == 1)
+        {
+            randomIndex = (int)(Math.random()*52);
+        }
+        else
+        {
+            randomIndex = (int)(Math.random()*40);
+        }
+        return randomIndex;        
+    }
+    
+    //**************************************************************
+    //Cambiamos el orden de la baraja 
+    public void barajear(int tipoMazo)
+    {
+        Carta[] mazoDArray = mazoD.toArray(new Carta[mazoD.size()]);
+        while(mazoDArray.length != mazoBarajeadoD.size())
+        {
+            int posicionCarta= random(tipoMazo);// recuperamos un valor aleatorio
+            Carta cartaMazo1=mazoDArray[posicionCarta];//obtenemos una carta al azar 
+            mazoBarajeadoD.add(cartaMazo1);  //agregamos la carta en orden diferente al mazo barajeado 
+        }
+    } 
+}
+
+/*
+Código eliminado
+// Obtenemos un iterador
+        Iterator<Carta> itr = mazoBarajeadoD.iterator();
+  
+        // printing the elements in LinkedHashSet
+        while (itr.hasNext())
+        {
+            System.out.println(itr.next().toString());
+        }
+        System.out.println("El tamaño es: "+mazoBarajeadoD.size());
+        System.out.println("EL MAZO HA SIDO BARAJEADO");
+
+
+            String paloMazo1 = mazoDArray[posicionCarta].palo;   //obtenemos identificador palo 
+            String idenMazo1 = mazoDArray[posicionCarta].identificadorCarta;  // obtenemos numero carta 
+//Metodo para controlar cartas repetidas para crear el MAZO BARAJEADO
     public boolean cartasIguales(List<Carta> list, String paloMazo1, String idenMazo1)
     {
         for (int i = 0; i < list.size(); i++)
@@ -164,39 +209,4 @@ public class Baraja
 
         //**************************************************************
     
-    // Generador de indices aleatorios para Barajear el mazo segun el tipo de mazo 
-    public int random(int tipoMazo)
-    {
-        int randomIndex = 0;
-        if(tipoMazo == 1)
-        {
-            randomIndex = (int)(Math.random()*52);
-        }
-        else
-        {
-            randomIndex = (int)(Math.random()*40);
-        }
-        return randomIndex;        
-    }
-    //**************************************************************
-    //Cambiamos el orden de la baraja 
-    public void barajear(int tipoMazo)
-    {
-        Carta[] mazoDArray = mazoD.toArray(new Carta[mazoD.size()]);
-        while(mazoDArray.length != mazoBarajeado.size())
-        {
-            
-            int posicionCarta= random(tipoMazo);// recuperamos un valor aleatorio
-            Carta cartaMazo1=mazoDArray[posicionCarta];//obtenemos una carta al azar 
-            String paloMazo1 = mazoDArray[posicionCarta].palo;   //obtenemos identificador palo 
-            String idenMazo1 = mazoDArray[posicionCarta].identificadorCarta;  // obtenemos numero carta 
-            if(!cartasIguales(mazoBarajeado, paloMazo1,idenMazo1)) //validamos que las cartas no se repitan
-            {
-                mazoBarajeado.add(cartaMazo1);  //agregamos la carta en orden diferente al mazo barajeado 
-            }           
-        }
-        System.out.println("EL MAZO HA SIDO BARAJEADO");
-    } 
-
-}
-
+*/
